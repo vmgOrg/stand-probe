@@ -1,0 +1,7 @@
+# Локальные файлы Claude Code — не публикуются
+CLAUDE.local.md
+.claude/settings.local.json
+
+# Секреты и локальные переменные окружения
+.env*
+*.local.*
