@@ -1,0 +1,7 @@
+# Владельцы зон (ворота В3.1). Побеждает последняя подходящая строка.
+# Общее — ведущий; зоны аналитиков — их команды и ведущий как резервный владелец.
+* @GrigoryevV
+/notes/anna.md @vmgOrg/func-analysts @GrigoryevV
+/notes/boris.md @vmgOrg/sec-analysts @GrigoryevV
+# Правила, шаблоны и workflow меняет только ведущий; строка последняя, чтобы её не перекрыли.
+/.github/ @GrigoryevV
