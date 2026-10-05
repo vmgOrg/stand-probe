@@ -1,0 +1,39 @@
+# Запрос на слияние от github-actions[bot] (ворота В3.2а).
+# Только ручной запуск. Внутри — git и gh pr create; скриптов из репозитория не исполняет.
+# Шагов одобрения и слияния нет.
+name: bot-pr
+
+on:
+  workflow_dispatch:
+
+permissions: {}
+
+concurrency:
+  group: bot-pr
+  cancel-in-progress: false
+
+jobs:
+  open-pr:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Ветка, правка, коммит, запрос
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RUN_ID: ${{ github.run_id }}
+        run: |
+          branch="bot/change-sheet-$RUN_ID"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git switch -c "$branch"
+          printf -- '- Запуск %s: запись бота.\n' "$RUN_ID" >> notes/change-sheet.md
+          git add notes/change-sheet.md
+          git commit -m "Лист изменений: запись бота (запуск $RUN_ID)"
+          git push origin "$branch"
+          gh pr create --base main --head "$branch" \
+            --title "Лист изменений: запись бота" \
+            --body "Пробный запрос от github-actions[bot] (ворота В3.2а). Сливает только человек после проверок и одобрения."
